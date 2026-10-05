@@ -29,11 +29,17 @@ services:
     environment:
       APP_ENV: local
       APP_DEBUG: "true"
+      DB_CONNECTION: pgsql
       DB_HOST: postgres
+      DB_PORT: 5432
       DB_DATABASE: shoplagbe_db
       DB_USERNAME: shoplagbe_user
       DB_PASSWORD: shoplagbe_secure_password
       REDIS_HOST: redis
+      REDIS_PORT: 6379
+      QUEUE_CONNECTION: redis
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
     depends_on:
       - postgres
       - redis
@@ -51,6 +57,20 @@ services:
     command: php artisan queue:work --sleep=3 --tries=3 --timeout=90
     volumes:
       - ./backend:/var/www/backend
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: shoplagbe_db
+      DB_USERNAME: shoplagbe_user
+      DB_PASSWORD: shoplagbe_secure_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      QUEUE_CONNECTION: redis
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
     depends_on:
       - php
       - redis
@@ -89,8 +109,8 @@ services:
   # Next.js 15 App Router Frontend
   frontend:
     build:
-      context: ./docker/frontend
-      dockerfile: Dockerfile
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile
     container_name: shoplagbe_frontend
     restart: unless-stopped
     ports:

@@ -14,8 +14,11 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo.
+echo Waiting 5 seconds for PostgreSQL and Redis services to initialize...
+timeout /t 5 /nobreak >nul
+
 echo Running database migrations and seeding demo catalog...
-docker compose exec php php artisan migrate --seed
+docker compose exec php php artisan migrate --seed --force
 
 echo.
 echo ===================================================

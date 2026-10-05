@@ -33,3 +33,6 @@ Thumbs.db
 .vscode/
 *.swp
 *.log
+
+# Nested clone
+Single-Vendor E-Commerce Platform/
